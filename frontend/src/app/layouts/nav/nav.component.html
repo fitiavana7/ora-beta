@@ -1,0 +1,45 @@
+<div class="w-full flex justify-between items-center px-10 py-4 ">
+    <span class="font-bold text-3xl text-red-500">ORA</span>
+    <div class="flex items-center">
+        <a [routerLink]="['/']" class="mx-3 p-2 border-b-2 text-red-500 hover:border-red-500 font-bold">guide</a>
+        <div className="relative" *ngIf="user">
+            <button (click)="toggleDropdown()" class="bg-red-500 p-2 rounded-md text-slate-200">menu</button>
+            <div *ngIf="showDropdown" class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg border-gray-200">
+              <h5 class="text-center pt-2 px-3 font-bold text-red-500">{{ user.username }}</h5>
+              <ul class="py-1">
+                <li>
+                  <a
+                    [routerLink]="['']"
+                    class="block px-4 py-2 text-left text-gray-800 hover:bg-red-200"
+                  >
+                    <span>Profile</span>
+                </a>
+                </li>
+                <li>
+                  <a
+                   [routerLink]="['/projects']"
+                   class="block px-4 py-2 text-left text-gray-800 hover:bg-red-200"
+                  >
+                        <span>projects</span>
+                    </a>
+                </li>
+                <li>
+                  <button
+                      (click)='handleSignOut()'
+                      class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-200 focus:outline-none"
+                  >
+                    <span>deconnecter</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+        </div> 
+        <a 
+            *ngIf="!user"
+            [routerLink]="['/']"
+        >
+            <button class="bg-red-500 p-2 rounded-md text-slate-200">se connecter</button>
+        </a>   
+    </div>
+</div> 
+    

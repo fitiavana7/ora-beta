@@ -1,0 +1,8 @@
+<h3 class="font-bold text-xl">{{project.titre}}</h3>
+<span class="bg-black text-white px-2 text-xs rounded-full">{{project.type}}</span> 
+<apx-chart
+    [series]="series"
+    [chart]="{type:'bar'}"
+    [xaxis]="xaxis"
+    class="w-1/2"
+></apx-chart>

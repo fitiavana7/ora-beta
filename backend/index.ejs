@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+<div class="row">
+    <div class="card" style="width:100%;">
+      <div class="card-header">
+        Featured
+      </div>
+      <div class="card-body">
+        <div class="alert alert-dark" style="width: 10%" role="alert">
+          <div id="timer"></div>          
+        </div>
+        <div class="alert alert-dark" style="width: 10%" role="alert">
+          <div id="timer-screen"></div>          
+        </div>
+        <h5 class="card-title">Tache 3</h5>
+        <p class="card-text">
+          <div class="form-group">
+            <label for="screenID">Screen ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="screenID"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              value="63464e8cc31f7b28666f418e"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">User ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              value="63464e8cc31f7b28666f4180"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="exampleInputEmail2">Company ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail2"
+              value="633e7a99276d76346a2f660e"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail4">ProjectID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail4"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              value="63464e8cc31f7b28666f4180"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">TaskID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail3"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              value="63464e8cc31f7b28666f4180"
+            />
+          </div>
+          </div>
+        </div>
+
+        <!--<button type="submit" class="btn btn-primary my-2 mx-2" onclick="joinChannel()">JOIN</button> -->
+        <button class="btn btn-sm btn-primary my-2 mx-2" onclick="stopCounter()">STOP COUNTER</button>
+          <a href="#" class="btn btn-primary my-2 mx-2" onclick="startCounter()">START</a>
+        <button class="btn btn-primary btn-sm my-2 mx-2" onclick="startCounterScreen()">
+          START COUNTER SCREEN
+        </button>
+        <button class="btn btn-sm btn-primary my-2 mx-2" onclick="stopCounterScreen()">
+          STOP COUNTER SCREEN</button
+        ><br />
+      </p>
+      </div>
+    </div>
+  </div>
+
+
+
+    
+
+    <script
+      src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+      integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const socketIO = io("http://localhost:6006");
+
+      // Counter  for task timer
+      const startCounter = function () {
+        const data = getData();
+        socketIO.emit("start", {
+            ...data
+        });
+      };
+
+    const stopCounterScreen = function () {
+      const data = getData();
+      socketIO.emit("stop-screen", {
+        screenID: data.screenID,
+        projectID:data.projectID,
+        userId: data.screenID
+      });
+    };
+    const stopCounter = function () {
+        const data = getData();
+        socketIO.emit("stop", {
+            ...data
+          } , (resultat) => {
+            console.log(resultat)
+          });
+    };
+
+    function objectId () {
+      return hex(Date.now() / 1000) +
+        ' '.repeat(16).replace(/./g, () => hex(Math.random() * 16))
+    }
+
+    function hex (value) {
+      return Math.floor(value).toString(16)
+    }
+
+    const startCounterScreen = function () {
+      const data = getData();
+      socketIO.emit("start-screen", {
+          screenID: data.screenID,
+          projectID:data.projectID,
+          userId: data.screenID
+        })
+    };
+
+          socketIO.on(
+            "timer-screen",
+            (data) =>
+              (document.getElementById("timer-screen").innerHTML = convertHMS(data.time))
+          );
+          socketIO.on(
+            "timer",
+            (data) => (document.getElementById("timer").innerHTML = convertHMS(data.time))
+          );
+
+          socketIO.on("take_screenshoot", () => {
+            console.log("take_screenshoot");
+          });
+
+
+          function convertHMS(value) {
+            const sec = parseInt(value, 10); // convert value to number if it's string
+            let hours   = Math.floor(sec / 3600); // get hours
+            let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+            let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+            // add 0 if value < 10; Example: 2 => 02
+            if (hours   < 10) {hours   = "0"+hours;}
+            if (minutes < 10) {minutes = "0"+minutes;}
+            if (seconds < 10) {seconds = "0"+seconds;}
+            return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
+        }
+
+          const getData = () => {
+            const ID = document.getElementById("exampleInputEmail1").value;
+            const companyID = document.getElementById("exampleInputEmail2").value;
+            const projectID = document.getElementById("exampleInputEmail4").value;
+            const taskID = document.getElementById("exampleInputEmail3").value;
+            const screenID = document.getElementById("screenID").value;
+            return {ID,companyID,projectID,taskID, screenID}
+          }
+          
+          const joinChannel = function () {
+          const data = getData();
+            socketIO.emit("join", {
+                ...data
+              } , (resultat) => {
+                console.log(resultat)
+              });
+          };
+          const joinScreen = function() {
+            const data = getData();
+            socketIO.emit("join-screen", {
+              screenID: data.screenID,
+              projectID:data.projectID,
+              userId: data.screenID
+            });
+          }
+          joinScreen();
+          joinChannel();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<div class="w-full rounded-lg bg-white p-2 border my-1 ">
+    <h4 (click)="showModal(task)" class="cursor-pointer font-semibold">{{task.titre}}</h4>
+    <div class="flex mt-4 justify-between items-center w-full">
+        <h6 class="font-bold text-red-500">{{currentTime}}</h6>
+        <div class="flex justify-end items-center w-full">
+            <!-- <button class="bg-green-500 hover:bg-green-700 p-1 px-2 rounded-md text-white mx-1">play</button>
+            <button class="bg-orange-500 hover:bg-orange-700 p-1 px-2 rounded-md text-white mx-1">pause</button>
+            <button class="bg-red-500 hover:bg-red-700 p-1 px-2 rounded-md text-white mx-1">stop</button> -->
+        </div>    
+    </div>
+</div>
+<app-task-modal
+    *ngIf="showTaskModal"
+    [task]="selectedTask"
+    [groupId]="groupId"
+    (sendShowModal)="receiveShowModal($event)"
+></app-task-modal>

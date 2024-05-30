@@ -1,0 +1,22 @@
+<div class="w-full px-5">
+    <h1 class="text-center font-bold text-3xl">MEMBRES</h1>
+    <div class="w-full py-2 my-3">
+        <div *ngFor="let member of members" class="w-full rounded-lg bg-white p-2 border my-1 ">
+            <h4 class="text-xs cursor-pointer font-semibold">{{member.username}}</h4>
+        </div>
+        <button (click)="changeShowAddMembers()" class="w-full rounded-lg bg-white p-1 border hover:bg-red-300"><span class="text-xl">+</span></button>
+        <form (submit)="handleSubmit($event)" *ngIf="showAddMembers" class=" mt-1 w-full bg-white p-3 rounded-lg">
+            <div>
+                <input 
+                    type="text"
+                    [value]="mail"
+                    (input)="setNewValue($event)" 
+                    placeholder="mail du nouveau membre" class="text-xs w-full my-1 border border-red-500 rounded-md focus:outline-red-500 p-1">
+                <p *ngIf="hasAddError" class='text-red-500 text-xs'>utilisateur non reconnu</p>
+            </div>
+            <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold mt-3 p-1 rounded-lg">
+                AJOUTER
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="px-10 flex justify-between items-center">
+    <div class="w-2/5">
+        <h2 class="text-4xl font-bold text-red-500">CREER VOTRE COMPTE ET COMMENCER A GERER</h2>
+        <p class="text-justify py-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sunt nam molestias. Autem atque officiis animi quibusdam similique a nemo nesciunt expedita voluptatem dolores, dolore harum rem corporis libero nihil in illum excepturi accusamus laborum, perferendis magni. Fugiat optio tempore assumenda id dolorem, obcaecati cupiditate dicta recusandae amet explicabo voluptate.</p>
+    </div>
+    <div class="w-2/5 flex justify-center items-center flex-col">
+        <div *ngIf="hasLoginError" class='px-3 border border-red-500 rounded-lg py-2 text-red-500 font-bold text-center my-2'>{{ errMessage }}</div>
+        <form class="w-3/5" (submit)="handleSubmit($event)">
+            <div>
+                <p class="font-bold">Nom d'utilisateur :</p>
+                <input 
+                    type="text"
+                    [value]="username"
+                    (input)="setNewValue($event , 'username')" 
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                    <p *ngIf="hasUsernameError" class='text-red-500'>username invalide</p>
+                </div>
+            <div>
+                <p class="font-bold">Mail :</p>
+                <input 
+                    type="text" 
+                    [value]="mail"
+                    (input)="setNewValue($event , 'mail')" 
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                <p *ngIf="hasMailError" class='text-red-500'>mail invalide</p>
+            </div>
+            <div>
+                <p class="font-bold">Mot de passe :</p>
+                <input 
+                    type="password" 
+                    [value]="password1"
+                    (input)="setNewValue($event , 'password1')" 
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                <p *ngIf="hasPasswordError" class='text-red-500'>mot de passe invalide</p>
+            </div>
+            <div class="mt-3">
+                <p class="font-bold">Confirmer mot de passe :</p>
+                <input 
+                    type="password"
+                    [value]="password2"
+                    (input)="setNewValue($event , 'password2')"  
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                    <p *ngIf="pwd1topwd2Error" class='text-red-500'>le password doit être identique</p>
+                </div>
+            <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold my-6 p-2 rounded-lg">
+                s'inscrire
+            </button>
+
+            <a [routerLink]="['/']" class="text-center text-red-400 hover:text-red-500 hover:underline"><p>j'ai dejà une compte</p></a>
+        </form>
+    </div>
+</div>

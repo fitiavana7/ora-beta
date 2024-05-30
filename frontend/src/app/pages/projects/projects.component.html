@@ -1,0 +1,22 @@
+<div class="px-10 w-full flex justify-between items-start">
+    <div class="w-full">
+        <h4 class="font-bold text-xl">PROJETS</h4>
+        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis expedita, impedit autem doloribus dolorum amet consequatur est nobis libero.</span>
+        <div class="grid grid-cols-3 gap-2 pt-5">
+            <div *ngFor="let project of projects" class="rounded-lg bg-white p-2 border">
+                <a [routerLink]="['/app/' , project._id]"><h4 class="text-red-500 italic w-full hover:text-red-600">{{project.titre}}</h4></a>
+                <div class="flex justify-between items-center">
+                    <span class="bg-black text-white px-2 text-xs rounded-full">{{project.type}}</span> 
+                    <button  *ngIf="user.id === project.ownerId" (click)="deleteProject(project._id)" class="rounded-lg bg-white p-1 hover:bg-red-300">delete</button>
+                </div>
+            </div>
+            <button (click)="changerModal()" class="rounded-lg bg-white p-2 border hover:bg-red-300"><span class="text-4xl">+</span></button>
+        </div>
+    </div>
+    <app-new-project 
+        *ngIf="showModal"
+        (SubmitNewProject)="receiveAddNewProject($event)"    
+        (changeShowModal)="receiveChangeShowNewProject($event)" 
+        [show]="showModal">
+    </app-new-project>
+</div>

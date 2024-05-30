@@ -1,0 +1,41 @@
+<h3 class="font-bold text-xl">{{project.titre}}</h3>
+<span class="bg-black text-white px-2 text-xs rounded-full">{{project.type}}</span> 
+<div class="overflow-x-scroll w-full py-6">
+        <div class="mt-5 flex w-fit items-start">
+            <div *ngFor="let group of tasks" class="bg-red-500 rounded-lg w-72 p-2 mx-3">
+                <div class="flex justify-between items-center py-2">
+                    <h3 class="font-bold">{{group.titre}}</h3>
+                    <button (click)="deleteGroup(group._id)" class="rounded-lg bg-white p-1 hover:bg-red-300">delete</button>
+                </div>
+                <div *ngFor="let item of group.tasks">
+                    <app-taches-item 
+                        [groupId]="group._id" 
+                        [task]="item"
+                        (sendRefreshPage)="receiveRefreshPage($event)"
+                    ></app-taches-item>
+                </div>
+                <button (click)="changeShowAddTask(group._id)" class="w-full rounded-lg bg-white p-1 border hover:bg-red-300"><span class="text-4xl">+</span></button>
+            </div>
+            <div class="w-72">
+                <button (click)="changeShowAddNewGroup()" class="rounded-lg bg-white p-1 border hover:bg-red-300 h-fit w-full"><span class="text-4xl">+</span></button>
+                <form (submit)="handleSubmit($event)" *ngIf="ShowAddNewGroup" class=" mt-1 w-full bg-white p-3 rounded-lg">
+                    <div>
+                        <input 
+                            type="text"
+                            [value]="titreGroup"
+                            (input)="setNewValue($event)" 
+                            placeholder="titre du groupe" class="text-xs w-full my-1 border border-red-500 rounded-md focus:outline-red-500 p-1">
+                    </div>
+                    <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold mt-3 p-1 rounded-lg">
+                        AJOUTER
+                    </button>
+                </form>
+            </div>
+        </div>     
+</div>
+<app-new-task 
+    [groupId]="groupId" 
+    (changeShowModal)="receiveChangeShowAddTask($event)" 
+    [show]="showAddTask"
+    *ngIf="showAddTask"
+></app-new-task>

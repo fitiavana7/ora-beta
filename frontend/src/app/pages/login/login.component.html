@@ -1,0 +1,35 @@
+<div class="px-10 flex justify-between items-center">
+    <div class="w-2/5">
+        <h2 class="text-4xl font-bold text-red-500">GERER VÔTRE PROJET EN ÉQUIPE AVEC ORA</h2>
+        <p class="text-justify py-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sunt nam molestias. Autem atque officiis animi quibusdam similique a nemo nesciunt expedita voluptatem dolores, dolore harum rem corporis libero nihil in illum excepturi accusamus laborum, perferendis magni. Fugiat optio tempore assumenda id dolorem, obcaecati cupiditate dicta recusandae amet explicabo voluptate.</p>
+    </div>
+    <div class="w-2/5 flex justify-center items-center">
+        <form class="w-3/5" (submit)="handleSubmit($event)">
+            <div *ngIf="hasLoginError" class='border border-red-500 rounded-lg py-2 text-red-500 font-bold text-center my-2'>{{ errMessage }}</div>
+            <div>
+                <p class="font-bold">Mail :</p>
+                <input 
+                    type="text"
+                    (input)="setNewValue($event , 'mail')"
+                    [value]="mail" 
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                <p *ngIf="hasMailError" class='text-red-500'>mail invalide</p>
+                </div>
+            <div class="mt-3">
+                <p class="font-bold">Mot de passe :</p>
+                <input 
+                    type="password"
+                    (input)="setNewValue($event , 'password')"
+                    [value]="password" 
+                    class="rounded-lg p-2 w-full border outline-red-500 border-red-500 focus:outline-red-500">
+                <p *ngIf="hasPasswordError" class='text-red-500'>mot de passe invalide</p>
+                </div>
+            <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold my-6 p-2 rounded-lg">
+                <span *ngIf="isLoading">connexion...</span>
+                <span *ngIf="!isLoading">se connecter</span>
+            </button>
+
+            <a [routerLink]="['/signin']" class="text-center text-red-400 hover:text-red-500 hover:underline"><p>créer une compte</p></a>
+        </form>
+    </div>
+</div>

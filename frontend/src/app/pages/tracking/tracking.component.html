@@ -1,0 +1,19 @@
+<div class="px-10 flex justify-between">
+    <div class="w-1/5">
+        <div class="px-5 py-4">
+            <button 
+                (click)="changePage('TACHES')" 
+                class="{{page === 'TACHES' ? activeLink : inActiveLink}}"
+            >tâches</button>
+            <button 
+                (click)="changePage('CHART')" 
+                class="{{page !== 'TACHES' ? activeLink : inActiveLink}}"
+            >données</button>
+        </div>
+        <app-membres></app-membres>
+    </div>
+    <div class="w-4/5 ">
+        <app-taches *ngIf="page === 'TACHES'"></app-taches>
+        <app-chart-page *ngIf="page === 'CHART'"></app-chart-page>
+    </div>
+</div>
